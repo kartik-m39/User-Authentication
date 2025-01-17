@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='11' width='14' height='10' rx='2' ry='2'/><path d='M16 11V7a4 4 0 0 0-8 0v4'/></svg>" type="image/svg+xml">
+    <title>All Users</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1c1c1c; /* Dark background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Centers content vertically */
+            height: 100vh;
+            color: #e0e0e0; /* Light text for contrast */
+        }
+
+        /* Header styles */
+        header {
+            width: 100%;
+            background-color: #1a73e8; /* Neon blue */
+            color: white;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* Ensure the header is above other content */
+            box-sizing: border-box;
+        }
+
+        header button {
+            background-color: #ff4081; /* Neon pink */
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        header button:hover {
+            background-color: #ff80ab; /* Lighter pink on hover */
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255, 64, 129, 0.6); /* Bright neon shadow */
+        }
+
+        .neon-line {
+            width: 100%;
+            height: 5px;
+            background-image: linear-gradient(90deg, #ff4081, #1a73e8); /* Neon gradient line */
+            box-shadow: 0 4px 12px rgba(255, 64, 129, 0.6), 0 4px 12px rgba(26, 115, 232, 0.6);
+            margin: 0 5px; /* Space between buttons */
+        }
+
+        /* Title styles */
+        h1 {
+            padding-top: 30px;
+            color: #ffffff;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Glow effect */
+        }
+
+        /* Table styles */
+        table {
+            width: 70%;
+            margin: 30px 0;
+            border-collapse: collapse;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Bright shadow */
+            border-radius: 8px;
+            background-color: #1f1f1f; /* Darker background for the table */
+            overflow: hidden; /* Rounded corners */
+        }
+
+        /* Table header styles */
+        table th, table td {
+            padding: 15px;
+            border: 1px solid #333; /* Dark border */
+            text-align: left;
+            color: #e0e0e0; /* Light text for readability */
+        }
+
+        /* Table header background */
+        table th {
+            background-color: #0d47a1; /* Deep neon blue */
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Table row hover effect */
+        table tr:nth-child(even) {
+            background-color: #2c2c2c; /* Darker row background */
+        }
+
+        table tr:nth-child(odd) {
+            background-color: #1a1a1a; /* Slightly lighter odd rows */
+        }
+
+        table tr:hover {
+            background-color: #373737; /* Hover effect with a darker shade */
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2); /* Bright shadow */
+        }
+
+        /* Table data style */
+        table td {
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button id="logoutBtn">Logout</button>
+        <div class="neon-line"></div>
+        <button id="deleteAccountBtn">Delete Account</button>
+    </header>
+    <h1>Users logged</h1>
+    <table id="users-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Hashed Password</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        const apibaseurl = 'http://localhost:3000/'; // Adjust this URL if needed
+
+        // Function to fetch and display all users
+        async function fetchAndDisplayUsers() {
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                window.location.href = '/index.html'; // Redirect to login page if no token
+                return;
+            }
+
+            // Fetch the users data from the backend
+            const response = await fetch(apibaseurl + 'api/users', {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` 
+                }
+            });
+
+            const data = await response.json();
+
+            console.log("Fetched users data:", data);
+
+            if (data.success) {
+                // Display the users in a table
+                const tableBody = document.querySelector('#users-table tbody');
+                data.users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.password}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                alert('Failed to load users');
+            }
+        }
+
+        // Function to handle logout
+        function logout() {
+            localStorage.removeItem('token'); // Remove the token from local storage
+            setTimeout(() => {
+                window.location.href = '/index.html'; // Redirect to login page
+            }, 2000);
+        }
+
+        // Function to handle account deletion
+        async function deleteAccount() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/index.html'; // Redirect to login page if no token
+                return;
+            }
+
+            try {
+                const response = await fetch(apibaseurl + 'api/users/delete', {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    alert('Account deleted successfully.');
+                    logout(); // Log out the user after account deletion
+                } else {
+                    alert('Failed to delete account.');
+                }
+            } catch (error) {
+                console.error('Error deleting account:', error);
+                alert('Failed to delete account.');
+            }
+        }
+
+        // Add event listener to the logout button
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('deleteAccountBtn').addEventListener('click', deleteAccount);
+
+        // Call the function to display users when the page loads
+        window.onload = fetchAndDisplayUsers;
+    </script>
+</body>
+</html>

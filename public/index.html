@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='11' width='14' height='10' rx='2' ry='2'/><path d='M16 11V7a4 4 0 0 0-8 0v4'/></svg>" type="image/svg+xml">
+    <title>User Authentication</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <section id="auth">
+      <div class="header">
+          <h2 class="sign-up-text">Login</h2>
+          <p id="success-message" style="display: none; color: green;"></p>
+      </div>
+
+      <p id="error" style="display: none;"></p>
+
+      <input id="emailInput" placeholder="Email" required/>
+      <input id="passwordInput" placeholder="Password" type="password" required/>
+
+      <button id="authBtn" onclick="authenticate()">
+          Submit
+      </button>
+
+      <!-- Neon line under the header -->
+      <div class="neon-line"></div>
+
+      <div class="register-content">
+          <p>Don&apos;t have an account?</p>
+          <button onclick="toggleIsRegister()" id="registerBtn">Sign up</button>
+      </div>
+  </section>
+
+  <script src="script.js"></script>
+  <script>
+    // Display success message if present in URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const message = urlParams.get('message');
+    if (message) {
+        const successMessage = document.getElementById('success-message');
+        successMessage.innerText = message;
+        successMessage.style.display = 'block';
+    }
+</script>
+</body>
+</html>

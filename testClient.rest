@@ -1,0 +1,30 @@
+### Get /
+GET http://localhost:3000/
+
+### Post /auth/register
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "username": "newuser3@example.com",
+    "password": "123456"
+}
+
+### Post /auth/login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "username": "newuser3@example.com",
+    "password": "123456"
+}
+
+### Get /auth/logout
+GET http://localhost:3000/users
+Content-Type: application/json
+Authorization:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzM2OTYzNzA0LCJleHAiOjE3MzcwNTAxMDR9.WU07A9KZDYMRc-dghyP1GC7uQVdPURjYFvb-8xHd3dg
+
+### DELETE /user/delete
+DELETE http://localhost:3000/api/users/delete
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzM3MDUzNjg0LCJleHAiOjE3MzcxNDAwODR9.N08H00MuGvc04yIj0S2Zhq-pWJ2-v70tQ0O5oV0izoI
