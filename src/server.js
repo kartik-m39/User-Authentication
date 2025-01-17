@@ -11,7 +11,12 @@ dotenv.config(); // Load the environment variables from the .env file
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.use(cors());
+// Apply CORS middleware
+app.use(cors({
+    origin: 'https://user-authentication-lsuqh8l26-kartik-manchandas-projects.vercel.app/',
+    methods: 'GET,POST,OPTIONS', // Allowed methods
+    allowedHeaders: 'Content-Type, Authorization' // Allowed headers
+}));
 
 // Get the file path from the URL of the current module
 const __filename = fileURLToPath(import.meta.url)
