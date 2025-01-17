@@ -147,7 +147,7 @@
             }
 
             // Fetch the users data from the backend
-            const response = await fetch(apibaseurl + 'api/users', {
+            const response = await fetch(apibaseurl + 'api/data', {
                 method: 'GET',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -193,7 +193,7 @@
             }
 
             try {
-                const response = await fetch(apibaseurl + 'api/users/delete', {
+                const response = await fetch(apibaseurl + 'api/data/delete', {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`

@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 })
 
 // Serve users.html for frontend
-app.get('/users', (req, res) => {
+app.get('/data', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/users.html'));
 });
 
@@ -40,7 +40,7 @@ app.use('/api/auth', authRoutes);
 // before the user routes are executed
 // this will ensure that the user is authenticated before they can access the user routes
 // api users is the path that the user routes will be mounted on
-app.use('/api/users', authMiddleware, userRoutes);
+app.use('/api/data', authMiddleware, userRoutes);
 
 
 app.listen(port, () => {console.log(`Server is running on port ${port}`)});                     
