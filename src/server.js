@@ -1,8 +1,8 @@
 import express from 'express';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/user.js';
+import authRoutes from './api/auth.js';
+import userRoutes from './api/user.js';
 import dotenv from 'dotenv';
 import authMiddleware from './middleware/authMiddleware.js';
 

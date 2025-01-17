@@ -4,7 +4,7 @@ let token = localStorage.getItem('token');
 let isRegister = false;
 let isAuthenticating = false;
 
-const apibaseurl = '/';
+const apibaseurl = 'https://user-authentication-sigma.vercel.app/';
 
 // Select the button
 const authBtn = document.getElementById('authbtn');
