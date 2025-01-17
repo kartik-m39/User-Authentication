@@ -5,11 +5,13 @@ import authRoutes from './api/auth.js';
 import userRoutes from './api/user.js';
 import dotenv from 'dotenv';
 import authMiddleware from './middleware/authMiddleware.js';
+import cors from 'cors';
 
 dotenv.config(); // Load the environment variables from the .env file
 
 const app = express();
 const port = process.env.PORT || 3000;
+app.use(cors());
 
 // Get the file path from the URL of the current module
 const __filename = fileURLToPath(import.meta.url)
