@@ -60,7 +60,7 @@ async function authenticate() {
     try{
         if(isRegister){
             // Register the user
-            const response = await fetch(apibaseurl + 'auth/register', {
+            const response = await fetch(apibaseurl + 'api/auth/register', {
                 method: 'POST',
                 headers:{ 'Content-Type': 'application/json'},
                 body: JSON.stringify({ username: email, password: password})
@@ -81,7 +81,7 @@ async function authenticate() {
             }
         } else {
             // Login the user
-            const response = await fetch(apibaseurl + 'auth/login', {
+            const response = await fetch(apibaseurl + 'api/auth/login', {
                 method: 'POST',
                 headers:{ 
                     'Content-Type': 'application/json',

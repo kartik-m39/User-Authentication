@@ -33,7 +33,7 @@ app.get('/users', (req, res) => {
 });
 
 // auth routes
-app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 // need to define the user routes
 // authMiddleware is a middleware function that will be executed
