@@ -18,6 +18,9 @@ app.use(cors({
     allowedHeaders: 'Content-Type, Authorization' // Allowed headers
 }));
 
+// Handle preflight requests (OPTIONS)
+app.options('*', cors());
+
 // Get the file path from the URL of the current module
 const __filename = fileURLToPath(import.meta.url)
 // Get the directory name from the file path
